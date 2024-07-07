@@ -2883,7 +2883,7 @@ __metadata:
     semantic-release-yarn: "npm:3.0.2"
   bin:
     release-packages: ./src/index.mjs
-  checksum: 10c0/d8eea4b91fbc9baaf295cf55de1d7c419aa99e6bcae7606caccfb6c5a1c879b13a1fc6c25b9370d8dfa9c1278324274e05ce9f585559f64d1046cd6f3aaf8ecb
+  checksum: 10c0/6b6e55a8751c653000a3df9d617e25a50c429e36597b3245dbed994a37fc126e70206f5ea04b27bad6bf987ea8df2417a64c1b3e9b3f117b74ed2c79d4c5feaa
   languageName: node
   linkType: hard
 
