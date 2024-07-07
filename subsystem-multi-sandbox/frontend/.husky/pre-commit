@@ -1,0 +1,20 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+frontend_dir=$(dirname "$0" | sed 's/\/.husky//')
+
+# Проверка изменений, готовящихся для коммита
+if git diff --cached --name-only -- ${frontend_dir} | grep -q "^${frontend_dir}/"; then
+    echo "pre-commit - изменения обнаружены в папке frontend. Запуск выполнения хуков"
+    cd ${frontend_dir}
+
+    yarn run lint-staged
+
+    # Проверка завершения
+    if [ $? -ne 0 ]; then
+        echo "pre-commit - ошибка выполнения хуков. Коммит отменен"
+        exit 1
+    fi
+else
+    echo "pre-commit - нет изменений в папке frontend. Пропуск выполнения хуков"
+fi

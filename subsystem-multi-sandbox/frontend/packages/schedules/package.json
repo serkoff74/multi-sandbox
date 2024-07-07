@@ -1,0 +1,35 @@
+{
+  "name": "@mis/multi-sandbox-second-package",
+  "version": "1.0.7",
+  "main": "src/index.ts",
+  "files": [
+    "published"
+  ],
+  "publishConfig": {
+    "main": "./published/schedules.mjs",
+    "types": "./published/index.d.ts"
+  },
+  "license": "MIT",
+  "engines": {
+    "yarn": ">=4.1.1",
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "vite build -c vite.publish.config.mjs && vue-tsc -p tsconfig.publish.json",
+    "clean:publish:package": "rimraf published",
+    "publish:package": "yarn run clean:publish:package && yarn run build && yarn npm publish && yarn run clean:publish:package",
+    "type-check": "vue-tsc --skipLibCheck --noEmit -p tsconfig.json --composite false",
+    "test": "vitest --no-watch"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "sass": "^1.54.8",
+    "typescript": "^5.4.5",
+    "vite": "^4.5.2",
+    "vite-plugin-css-injected-by-js": "^3.5.0",
+    "vite-plugin-externalize-deps": "^0.8.0",
+    "vitest": "^0.34.6",
+    "vue-tsc": "^2.0.16"
+  },
+  "packageManager": "yarn@4.1.1"
+}

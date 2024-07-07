@@ -1,0 +1,11 @@
+.git
+.idea
+**/.dockerignore
+**/.gitignore
+**/Dockerfile*
+**/Makefile*
+**/README*
+**/docker-compose*
+**/Dockerfile*
+**/var/
+**/vendor/

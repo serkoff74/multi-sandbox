@@ -1,0 +1,32 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+frontend_dir=$(dirname "$0" | sed 's/\/.husky//')
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Проверка, существует ли удаленная ветка
+if git ls-remote --exit-code origin $current_branch > /dev/null; then
+    echo "pre-push - удаленная ветка существует. Сравнение изменений с удаленной веткой"
+
+    # Проверка изменений между локальной и удаленной ветками
+    if git diff --name-only origin/$current_branch -- ${frontend_dir} | grep -q "^${frontend_dir}/"; then
+        echo "pre-push - изменения обнаружены в папке frontend. Запуск выполнения хуков"
+        cd ${frontend_dir}
+        yarn run type-check:packages
+    else
+        echo "pre-push - изменения в папке frontend не обнаружены. Пропуск выполнения хуков"
+    fi
+else
+    echo "pre-push - удаленная ветка не обнаружена. Проверка локальных изменений"
+
+    # Проверка локальных изменений
+    if git diff --name-only HEAD~1 -- ${frontend_dir} | grep -q "^${frontend_dir}/"; then
+        echo "pre-push - изменения обнаружены в локальной папке frontend. Запуск выполнения хуков"
+        cd ${frontend_dir}
+        yarn run type-check:packages
+    else
+        echo "pre-push - изменения в локальной папке frontend не обнаружены. Пропуск выполнения хуков"
+    fi
+fi
+
